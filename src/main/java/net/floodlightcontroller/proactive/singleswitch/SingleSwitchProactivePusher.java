@@ -122,7 +122,7 @@ implements IFloodlightModule {
 		//El match que se muestra a continuación es incorrecto (no todos los datos calzan)
 		//Cuál es el match con menos campos que se puede crear?
 		//Cuál es el match con más campos que se puede crear?
-		OFFactory myFactory = OFFactories.getFactory(OFVersion.OF_10); /* Get the OFFactory version we need based on the existing object's version. */
+		OFFactory myFactory = OFFactories.getFactory(OFVersion.OF_13); /* Get the OFFactory version we need based on the existing object's version. */
 		Match match1 = myFactory.buildMatch()
 			    .setExact(MatchField.IN_PORT, OFPort.of(1))
 //			    .setExact(MatchField.ETH_TYPE, EthType.IPv4)
@@ -132,7 +132,8 @@ implements IFloodlightModule {
 			    .build();
 		//Este llamado se encarga de enviar un mensaje al switch para insertar la regla
 		this.writeFlowMod(switchInstance, OFFlowModCommand.ADD, OFBufferId.NO_BUFFER, match1, OFPort.of(2));
-		
+
+
 		//Este llamado se encarga de enviar un mensaje al switch para insertar la regla
 		Match match2 = myFactory.buildMatch()
 			    .setExact(MatchField.IN_PORT, OFPort.of(2))
