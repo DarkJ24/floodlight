@@ -181,7 +181,7 @@ implements IFloodlightModule {
 			//Cuando fuente y destino viven en switches diferentes, necesita preguntarle
 			//al routingService cual es la ruta desde switch/puerto origen hasta switch/puerto destino
 			Route route = null;
-			//route = this.routingService.getRoute...
+			route = this.routingService.getRoute(srcSwitch.getId(),srcPort,dstSwitch.getId(),dstPort,U64.ZERO);
 			List<NodePortTuple> path = route.getPath();
 			//Luego, debe recorrer el path para insertar las reglas adecuadamente
 			for (Iterator<NodePortTuple> iterator = path.iterator(); iterator.hasNext();) {
