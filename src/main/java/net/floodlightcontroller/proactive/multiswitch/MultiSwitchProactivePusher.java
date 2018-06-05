@@ -145,7 +145,11 @@ implements IFloodlightModule {
 			//donde están conectados los dos dispositivos. Esta información tardará un tiempo
 			//en ser descubierta, por lo que puede mantener el programa en un ciclo hasta
 			//que obtenga toda la información necesaria
-			
+			srcSwitch = this.ipTrackerService.findAttachmentSwitchForIp(ipSrc);
+			dstSwitch = this.ipTrackerService.findAttachmentSwitchForIp(ipDst);
+			srcPort = this.ipTrackerService.findAttachmentPortForIp(ipSrc);
+			dstPort = this.ipTrackerService.findAttachmentPortForIp(ipDst);
+
 			//Importante: para que Floodlight descubra automáticamente donde está un nodo final,
 			//este nodo debe tener alguna actividad en la red. Sugerencia: ejecute pingall en Mininet
 			
@@ -172,7 +176,7 @@ implements IFloodlightModule {
 		if (srcSwitch == dstSwitch) {
 			//Cuando fuente y destino están en el mismo switch, solo debe llamar al método
 			//createRulesForSwitch con los parámetros adecuados
-			//this.createRulesForSwitch...
+			this.createRulesForSwitch(srcSwitch, srcPort, dstPort, srcIpString, dstIpString);
 		} else { //Src y Dst están en switches diferentes
 			//Cuando fuente y destino viven en switches diferentes, necesita preguntarle
 			//al routingService cual es la ruta desde switch/puerto origen hasta switch/puerto destino
@@ -184,7 +188,7 @@ implements IFloodlightModule {
 				NodePortTuple in = (NodePortTuple) iterator.next();
 				NodePortTuple out = (NodePortTuple) iterator.next();
 				IOFSwitch ofswitch = switchService.getActiveSwitch(in.getNodeId());
-				//this.createRulesForSwitch..getClass().
+				this.createRulesForSwitch(ofswitch, in.getPortId(), out.getPortId(), srcIpString, dstIpString);
 				System.out.println("Pushing rules at switch " + ofswitch.toString());
 			}
 			//Al llegar a este punto, el ping entre origen y destino debería funcionar
@@ -199,7 +203,7 @@ implements IFloodlightModule {
 	 * entrada y del puerto y switch de salida, así como las direcciones IP.
 	 * */
 	private void createRulesForSwitch(IOFSwitch switchInstance, OFPort inPort, OFPort outPort, String srcIp, String dstIp) {
-		OFFactory myFactory = OFFactories.getFactory(OFVersion.OF_10); /* Get the OFFactory version we need based on the existing object's version. */
+		OFFactory myFactory = OFFactories.getFactory(OFVersion.OF_13); /* Get the OFFactory version we need based on the existing object's version. */
 		//Primer match, flujo en una dirección
 		Match match1 = myFactory.buildMatch()
 			    .setExact(MatchField.IN_PORT, inPort)
