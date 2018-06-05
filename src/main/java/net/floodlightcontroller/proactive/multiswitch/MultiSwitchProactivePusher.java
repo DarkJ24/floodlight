@@ -203,7 +203,7 @@ implements IFloodlightModule {
 	 * entrada y del puerto y switch de salida, así como las direcciones IP.
 	 * */
 	private void createRulesForSwitch(IOFSwitch switchInstance, OFPort inPort, OFPort outPort, String srcIp, String dstIp) {
-		OFFactory myFactory = OFFactories.getFactory(OFVersion.OF_13); /* Get the OFFactory version we need based on the existing object's version. */
+		OFFactory myFactory = OFFactories.getFactory(OFVersion.OF_10); /* Get the OFFactory version we need based on the existing object's version. */
 		//Primer match, flujo en una dirección
 		Match match1 = myFactory.buildMatch()
 			    .setExact(MatchField.IN_PORT, inPort)
