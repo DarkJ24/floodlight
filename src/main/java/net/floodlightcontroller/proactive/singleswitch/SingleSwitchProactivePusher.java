@@ -146,6 +146,7 @@ implements IFloodlightModule {
 		this.writeFlowMod(switchInstance, OFFlowModCommand.ADD, OFBufferId.NO_BUFFER, match2, OFPort.of(1));
 		
 		System.out.println("Listo! Intente ejecutar h1 ping h2 en la consola de Mininet. El ping debería funcionar.");
+
 	}
 	
 	//Para este ejercicio, no es necesario modificar este método
