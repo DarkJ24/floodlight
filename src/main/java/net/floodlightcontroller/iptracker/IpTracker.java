@@ -62,7 +62,7 @@ public class IpTracker implements IIpTrackerService, IOFMessageListener, IFloodl
 			IPv4Address IPv4SrcAddr = this.getIPv4Address(eth);
 			if (this.ipToSwitch.get(IPv4SrcAddr) == null) {
 				this.ipToSwitch.put(IPv4SrcAddr, sw);
-				this.ipToPort.put(IPv4SrcAddr, pi.getInPort());
+				this.ipToPort.put(IPv4SrcAddr, pi.getMatch().get(MatchField.IN_PORT));
 				System.out.println("IP " + IPv4SrcAddr.toString() + " attached to switch " + sw.toString() + " port = " + pi.getInPort().toString());
 			}
 		}	
