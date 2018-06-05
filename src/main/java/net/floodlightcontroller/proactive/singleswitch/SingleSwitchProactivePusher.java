@@ -133,7 +133,6 @@ implements IFloodlightModule {
 		//Este llamado se encarga de enviar un mensaje al switch para insertar la regla
 		this.writeFlowMod(switchInstance, OFFlowModCommand.ADD, OFBufferId.NO_BUFFER, match1, OFPort.of(2));
 
-
 		//Este llamado se encarga de enviar un mensaje al switch para insertar la regla
 		Match match2 = myFactory.buildMatch()
 			    .setExact(MatchField.IN_PORT, OFPort.of(2))
