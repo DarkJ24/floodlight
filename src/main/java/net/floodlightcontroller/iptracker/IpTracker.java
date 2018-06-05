@@ -109,6 +109,8 @@ public class IpTracker implements IIpTrackerService, IOFMessageListener, IFloodl
 	@Override
 	public void init(FloodlightModuleContext context) throws FloodlightModuleException {
 		// TODO Auto-generated method stub
+		this.ipToSwitch = new Hashtable<>();
+		this.ipToPort = new Hashtable<>();
 		floodlightProviderService = context.getServiceImpl(IFloodlightProviderService.class);
 	}
 
